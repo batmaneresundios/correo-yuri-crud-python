@@ -26,7 +26,7 @@ class DAO():
             except Error as ex:
                 print("Error al intentar la conexión: {0}".format(ex))
     
-    def registrarCD(self, trabajador):
+    def registrarContacto(self, trabajador):
         if self.conexion.is_connected():
             try:
                 cursor = self.conexion.cursor()
@@ -68,3 +68,4 @@ class DAO():
                     #print("connection is closed")
             """except Error as ex:
                 print("Error al intentar la conexión: {0}".format(ex))"""
+            

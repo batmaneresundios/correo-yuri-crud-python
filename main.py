@@ -1,12 +1,12 @@
 from BD.conexion import DAO
-from clase import CD, Musica
+from clase import Empresa, Musica
 
 
 def actualizarTrabajador():
     arrayCd = dao.listarTrabajador()
     musica.trabajador = []
     for con in musica.trabajador:
-        musica.addCd(CD(con[0], con[1], con[2], con[3], con[4], con[5], con[6]))
+        musica.addCd(Empresa(con[0], con[1], con[2], con[3], con[4], con[5], con[6]))
 
 def menuPrincipal():
     continuar = True

@@ -1,5 +1,4 @@
-
-class CD():
+class Empresa():
     def __init__(self,rut,nombre_completo,sexo,cargo,direccion,telefono,fecha_ingreso):
         self.rut = rut
         self.nombre_completo = nombre_completo
@@ -17,7 +16,7 @@ class Musica():
     def listarTrabajador(self):
         print("\nTrabajador: \n")
         for con in self.trabajador:
-            datos = "Rut {0}| Nombre Completo: {1}|sexo {2}| cargo {3}|Direccion {4}|telefono {5}|fecha ingreso {6}"
+            datos = "Rut {0}| Nombre Completo: {1}| Sexo {2} | Cargo {3} | Direccion {4} | Telefono {5}| Fecha ingreso {6}"
             print(datos.format(con.rut, con.nombre_completo, con.sexo, con.cargo, con.direccion,con.telefono,con.fecha_ingreso))
             print(" ")  
 
@@ -35,25 +34,25 @@ class Musica():
             indice = -1
         return indice #retorna -1 si no está, sino, retorna indice en donde está esa id en el arreglo
 
-    def addCd(self,datoCD):
-        self.trabajador.append(datoCD)
+    def addCd(self,trabajador):
+        self.trabajador.append(trabajador)
         
     @staticmethod
     def pedirDatosCD(rut):
         rut= input("Ingrese el rut: ")
         NumeroCorrecto = False
         while(not NumeroCorrecto):
-            nombre_completo = input("Ingrese Genero : ")
-            sexo = input("Ingrese Descripcion: ")
-            cargo = input("Ingrese duracion: ")
+            nombre_completo = input("Ingrese nombre completo : ")
+            sexo = input("Ingrese sexo: ")
+            cargo = input("Ingrese cargo: ")
             direccion = input("Ingrese direccion: ")
-            telefono = input("Ingrese Telefono: ")
-            fecha_ingreso = input("Ingrese fecha de ingreso")
+            telefono = input("Ingrese telefono: ")
+            fecha_ingreso = input("Ingrese fecha de ingreso: ")
             NumeroCorrecto = True
-        trabajador = CD(rut,nombre_completo,sexo,cargo,direccion,telefono,fecha_ingreso)
+        trabajador = Empresa(rut,nombre_completo,sexo,cargo,direccion,telefono,fecha_ingreso)
         return trabajador
 
-    def agregarCds(self):  #Agrega Cds
+    def agregarContacto(self):  #Agrega Cds
         rut=0
         for con in self.trabajador: #revisa arreglo creado más arriba
             if con.rut > rut:
@@ -61,8 +60,9 @@ class Musica():
         trabajador=Musica.pedirDatosCD(rut+1) #esto asegura que el id es mayor al último registrado  #
         self.addCd(trabajador) #agrega al cd a la lista en el obj
         return trabajador
+    
     def actualizarCds(self):
-        self.listarCd()
+        self.listarTrabajador()
         
         NumeroCorrecto = False
         while(not NumeroCorrecto):
@@ -80,15 +80,15 @@ class Musica():
 
         if existeId > -1:
             print("ingrese datos a modificar")
-            datoCD=Musica.pedirDatosCD(idEditar)
-            self.cd[existeId]=datoCD #modifica el contacto en el objeto
+            trabajador=Musica.pedirDatosCD(idEditar)
+            self.cd[existeId]=trabajador #modifica el contacto en el objeto
         else:
-            datoCD = None
+            trabajador = None
 
-        return datoCD
+        return trabajador
     
     def eliminarCds(self):
-        self.listarCd()
+        self.listarTrabajador()
 
         NumeroCorrecto = False
         while(not NumeroCorrecto):
