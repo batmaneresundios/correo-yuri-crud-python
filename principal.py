@@ -2,10 +2,11 @@ from BD.conexion import DAO
 from clase import Empresa, Musica
 
 
+
 def actualizarTrabajador():
     arrayCd = dao.listarTrabajador()
     for con in arrayCd:
-        musica.addCd(Empresa(con[0], con[1], con[2], con[3], con[4], con[5], con[6]))
+        musica.addCd(Empresa(con[0], con[1], con[2], con[3]))
 
 def menuPrincipal():
     continuar = True
@@ -43,15 +44,15 @@ def ejecutarOpcion(opcion):
         except:
             print("Ocurrió un error...")
     elif opcion == 2:
-        contacto = musica.agregarContacto()
+        contacto = musica.agregarTrabajador()
         try:
-            dao.registrarContacto(contacto.returnArray())
+            dao.registrarTrabajador(contacto.returnArray())
         except:
             print("Ocurrió un error...")
     elif opcion == 3:
         try:
             #actualizarAgenda()
-            if len(musica.contactos) > 0:
+            if len(musica.contacto) > 0:
                 contacto = musica.actualizarContacto()
                 if contacto:
                     dao.actualizarContacto(contacto.returnArray())

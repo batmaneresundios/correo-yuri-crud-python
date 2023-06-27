@@ -20,13 +20,13 @@ class DAO():
         if self.conexion.is_connected():
             try:
                 cursor = self.conexion.cursor()
-                cursor.execute('SELECT * FROM trabajador')  #Nombre tabla con Mayus.
+                cursor.execute('SELECT `rut`, `nombre_completo`, `sexo`, `cargo` FROM `trabajador`;')  #Nombre tabla con Mayus.
                 resultados = cursor.fetchall()
                 return resultados
             except Error as ex:
                 print("Error al intentar la conexión: {0}".format(ex))
     
-    def registrarContacto(self, trabajador):
+    def registrarTrabajador(self, trabajador):
         if self.conexion.is_connected():
             try:
                 cursor = self.conexion.cursor()

@@ -1,23 +1,20 @@
 class Empresa():
-    def __init__(self,rut,nombre_completo,sexo,cargo,direccion,telefono,fecha_ingreso):
+    def __init__(self,rut,nombre_completo,sexo,cargo):
         self.rut = rut
         self.nombre_completo = nombre_completo
         self.sexo = sexo
         self.cargo = cargo
-        self.direccion = direccion
-        self.telefono = telefono
-        self.fecha_ingreso = fecha_ingreso
     
     def returnArray(self):
-        return [self.rut,self.nombre_completo,self.sexo,self.cargo,self.direccion,self.telefono,self.fecha_ingreso]
+        return [self.rut,self.nombre_completo,self.sexo,self.cargo]
 
 class Musica():
     trabajador= []
     def listarTrabajador(self):
         print("\nTrabajador: \n")
         for con in self.trabajador:
-            datos = "Rut {0}| Nombre Completo: {1}| Sexo {2} | Cargo {3} | Direccion {4} | Telefono {5}| Fecha ingreso {6}"
-            print(datos.format(con.rut, con.nombre_completo, con.sexo, con.cargo, con.direccion,con.telefono,con.fecha_ingreso))
+            datos = "Rut {0}| Nombre Completo: {1}| Sexo {2} | Cargo {3}"
+            print(datos.format(con.rut, con.nombre_completo, con.sexo, con.cargo))
             print(" ")  
 
     def rutExiste(self,rut):
@@ -45,14 +42,11 @@ class Musica():
             nombre_completo = input("Ingrese nombre completo : ")
             sexo = input("Ingrese sexo: ")
             cargo = input("Ingrese cargo: ")
-            direccion = input("Ingrese direccion: ")
-            telefono = input("Ingrese telefono: ")
-            fecha_ingreso = input("Ingrese fecha de ingreso: ")
             NumeroCorrecto = True
-        trabajador = Empresa(rut,nombre_completo,sexo,cargo,direccion,telefono,fecha_ingreso)
+        trabajador = Empresa(rut,nombre_completo,sexo,cargo)
         return trabajador
 
-    def agregarContacto(self):  #Agrega Cds
+    def agregarTrabajador(self):  #Agrega Cds
         rut=0
         for con in self.trabajador: #revisa arreglo creado más arriba
             if con.rut > rut:
