@@ -1,5 +1,5 @@
 from BD.conexion import DAO
-from clase import Empresa, Musica
+from clase import Empresa, Musica,Familiar,Emergencia
 
 
 
@@ -45,8 +45,12 @@ def ejecutarOpcion(opcion):
             print("Ocurrió un error...")
     elif opcion == 2:
         contacto = musica.agregarTrabajador()
+        contacto_a = emergencia.agregarContacto()        
+        carga = familiar.agregarCarga()
         try:
             dao.registrarTrabajador(contacto.returnArray2())
+            dao.registrarContacto(contacto_a.arrayContacto())
+            dao.registrarCarga(carga.returnCarga())
         except:
             print("Ocurrió un error...")
     elif opcion == 3:
@@ -78,7 +82,8 @@ def ejecutarOpcion(opcion):
     else:
         print("Opción no válida...")
 
-
+emergencia = Emergencia()
+familiar = Familiar()
 musica = Musica()
 dao = DAO()
 actualizarTrabajador() #ponemos los datos de la BD en el objeto agenda

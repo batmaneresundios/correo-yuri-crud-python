@@ -30,7 +30,7 @@ class DAO():
         if self.conexion.is_connected():
             try:
                 cursor = self.conexion.cursor()
-                sql = "INSERT INTO trabajador (rut, nombre_completo, sexo, cargo, direccion, telefono, fecha_ingreso, id_area, id_departamento) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}',{7},{8})"
+                sql = "INSERT INTO trabajador (rut, nombre_completo, sexo, cargo, direccion, telefono, fecha_ingreso, id_area, id_departamento) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}','{7}','{8}')"
                 cursor.execute(sql.format(trabajador[0], trabajador[1], trabajador[2], trabajador[3], trabajador[4], trabajador[5], trabajador[6], trabajador[7], trabajador[8]))
                 self.conexion.commit()
                 print("¡Trabajador registrado!\n")
@@ -38,16 +38,29 @@ class DAO():
                 print("Error al intentar la conexión: {0}".format(ex))
 
 
-    def registrarContacto(self, trabajador):
+    def registrarCarga(self, carga):
         if self.conexion.is_connected():
             try:
                 cursor = self.conexion.cursor()
-                sql = "INSERT INTO trabajador (rut, nombre_completo, sexo, cargo, direccion, telefono, fecha_ingreso, id_area, id_departamento) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}',{7},{8})"
-                cursor.execute(sql.format(trabajador[0], trabajador[1], trabajador[2], trabajador[3], trabajador[4], trabajador[5], trabajador[6], trabajador[7], trabajador[8]))
+                sql = "INSERT INTO `carga_familiar`(`rut_carga`, `nombre_completo`, `parentesco`, `rut`) VALUES ('{0}','{1}','{2}','{3}')"
+                cursor.execute(sql.format(carga[0], carga[1], carga[2], carga[3]))
                 self.conexion.commit()
-                print("¡Trabajador registrado!\n")
+                print("Carga registrada!\n")
             except Error as ex:
                 print("Error al intentar la conexión: {0}".format(ex))
+
+    def registrarContacto(self, contacto):
+                if self.conexion.is_connected():
+                    try:
+                        cursor = self.conexion.cursor()
+                        sql = "INSERT INTO contacto_emergencia (rut_contacto, nombre_completo,relacion,telefono,rut) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')"
+                        cursor.execute(sql.format(contacto[0],contacto[1],contacto[2],contacto[3],contacto[4]))
+                        self.conexion.commit()
+                        print("Contacto de emergencia registrado!\n")
+                    except Error as ex:
+                        print("Error al intentar la conexión: {0}".format(ex))
+
+                
 
     
     def actualizarCds(self, datosCD):

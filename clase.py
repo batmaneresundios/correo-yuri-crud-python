@@ -22,6 +22,74 @@ class Trabajador(Empresa):
     def returnArray2(self):
         return super().returnArray() + [self.direccion, self.telefono, self.fecha_ingreso,self.area,self.departamento]
 
+class Carga():
+    def __init__(self,rut_carga,nombre_completo,parentesco,rut):
+        self.rut_carga = rut_carga
+        self.nombre_completo = nombre_completo
+        self.parentesco = parentesco
+        self.rut = rut
+
+    def returnCarga(self):
+        return [self.rut_carga,self.nombre_completo,self.parentesco,self.rut]
+
+class Familiar():
+    carga = []
+    def pedirDatosCarga(rut_carga):
+        print("=== Datos carga familiar del trabajador ===")
+        rut_carga= input("Ingrese el rut carga familiar: ")
+        NumeroCorrecto = False
+        while(not NumeroCorrecto):
+            nombre_completo = input("Ingrese nombre completo : ")
+            parentesco = input("Ingrese parentesco: ")
+            rut = input("Ingrese rut del trabajador: ")            
+            NumeroCorrecto = True
+        carga = Carga(rut_carga,nombre_completo,parentesco,rut)
+        return carga
+    
+    def agregarCarga(self):  #Agrega Cds
+        rut_carga=0
+        for con in self.carga: #revisa arreglo creado más arriba
+            if con.rut_carga > rut_carga:
+                rut_carga = con.rut_carga
+        carga = Familiar.pedirDatosCarga(rut_carga+1) #esto asegura que el id es mayor al último registrado  #
+        return carga
+    
+class Contacto():
+    def __init__(self,rut_contacto,nombre_completo,relacion,telefono,id_rut):
+        self.rut_contacto = rut_contacto
+        self.nombre_completo = nombre_completo
+        self.relacion = relacion
+        self.telefono = telefono
+        self.id_rut = id_rut
+
+    def arrayContacto(self):
+        return [self.rut_contacto,self.nombre_completo,self.relacion,self.telefono,self.id_rut]
+
+class Emergencia():
+    contacto =[]
+
+    def pedirDatosContacto(self):
+        print("=== Datos contacto de Emergencia del trabajador ===")        
+        rut_contacto = input("Ingrese el rut: ")
+        NumeroCorrecto = False
+        while(not NumeroCorrecto):
+            nombre_completo = input("Ingrese nombre completo : ")
+            relacion = input("Ingrese relacion: ")
+            telefono = input("Ingrese telefono: ")
+            id_rut = input("Ingrese el rut del trabajador")
+            NumeroCorrecto = True
+        contacto = Contacto(rut_contacto,nombre_completo,relacion,telefono,id_rut)
+        return contacto
+    
+    def agregarContacto(self):  
+        rut_contacto=0
+        for con in self.contacto: 
+            if con.rut_contacto > rut_contacto:
+                rut_contacto = con.rut_contacto
+        contacto = Emergencia.pedirDatosContacto(rut_contacto+1) 
+        return contacto
+
+
 class Musica():
     trabajador= []
     def listarTrabajador(self):
@@ -62,13 +130,13 @@ class Musica():
             print("=== Datos laborales del trabajador ===")
             cargo = input("Ingrese cargo del trabajador: ")
             fecha_ingreso = input("Ingrese fecha de ingreso del trabajador: ")
-            print("== Ingrese ID área del trabajador según lo siguiente: ")
+            print("Ingrese ID área del trabajador según lo siguiente: ")
             area = dao.listarArea()
             for i in range(len(area)):
                 print(area[i])
                 continue
-            area = input("Ingrese numero: ")
-            print("== Ingrese ID departamento del trabajador según lo siguiente: ")
+            area = input("Ingrese ID del área: ")
+            print("Ingrese ID departamento del trabajador según lo siguiente: ")
             departamento = dao.listarDepartamento()
             for i in range(len(departamento)):
                 print(departamento[i])
@@ -84,7 +152,6 @@ class Musica():
             if con.rut > rut:
                 rut = con.rut
         trabajador=Musica.pedirDatosCD(rut+1) #esto asegura que el id es mayor al último registrado  #
-        self.addCd(trabajador) #agrega al cd a la lista en el obj
         return trabajador
     
     def actualizarCds(self):
