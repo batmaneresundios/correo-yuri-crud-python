@@ -1,12 +1,26 @@
+from BD.conexion import DAO
+
 class Empresa():
     def __init__(self,rut,nombre_completo,sexo,cargo):
         self.rut = rut
         self.nombre_completo = nombre_completo
         self.sexo = sexo
         self.cargo = cargo
-    
+            
     def returnArray(self):
         return [self.rut,self.nombre_completo,self.sexo,self.cargo]
+
+class Trabajador(Empresa):
+    def __init__(self, rut, nombre_completo, sexo, cargo, direccion, telefono, fecha_ingreso,area,departamento):
+        super().__init__(rut, nombre_completo, sexo, cargo)
+        self.direccion = direccion
+        self.telefono = telefono
+        self.fecha_ingreso = fecha_ingreso
+        self.area = area
+        self.departamento = departamento
+
+    def returnArray2(self):
+        return super().returnArray() + [self.direccion, self.telefono, self.fecha_ingreso,self.area,self.departamento]
 
 class Musica():
     trabajador= []
@@ -36,14 +50,32 @@ class Musica():
         
     @staticmethod
     def pedirDatosCD(rut):
+        print("=== Datos personales del trabajador ===")
         rut= input("Ingrese el rut: ")
         NumeroCorrecto = False
         while(not NumeroCorrecto):
             nombre_completo = input("Ingrese nombre completo : ")
             sexo = input("Ingrese sexo: ")
-            cargo = input("Ingrese cargo: ")
+            direccion = input("Ingrese direccion: ")
+            telefono = input("Ingrese telefono: ")
             NumeroCorrecto = True
-        trabajador = Empresa(rut,nombre_completo,sexo,cargo)
+            print("=== Datos laborales del trabajador ===")
+            cargo = input("Ingrese cargo del trabajador: ")
+            fecha_ingreso = input("Ingrese fecha de ingreso del trabajador: ")
+            print("== Ingrese ID área del trabajador según lo siguiente: ")
+            area = dao.listarArea()
+            for i in range(len(area)):
+                print(area[i])
+                continue
+            area = input("Ingrese numero: ")
+            print("== Ingrese ID departamento del trabajador según lo siguiente: ")
+            departamento = dao.listarDepartamento()
+            for i in range(len(departamento)):
+                print(departamento[i])
+                continue
+            departamento = input("Ingrese ID del departamento: ")                     
+            NumeroCorrecto = True
+        trabajador = Trabajador(rut,nombre_completo,sexo,cargo,direccion,telefono,fecha_ingreso,area,departamento)
         return trabajador
 
     def agregarTrabajador(self):  #Agrega Cds
@@ -103,3 +135,6 @@ class Musica():
             del self.trabajador[existerut] #elimina el contacto de la lista en el obj
         
         return idEliminar
+
+
+dao = DAO()

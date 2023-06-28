@@ -16,7 +16,7 @@ def menuPrincipal():
             print("==================== MENÚ PRINCIPAL ====================")
             print("1.- Listar Trabajadores")
             print("2.- Registrar Trabajador")
-            print("3.- Actualizar Trabajadpr")
+            print("3.- Actualizar Trabajador")
             print("4.- Eliminar trabajador")
             print("5.- Salir")
             print("========================================================")
@@ -46,7 +46,7 @@ def ejecutarOpcion(opcion):
     elif opcion == 2:
         contacto = musica.agregarTrabajador()
         try:
-            dao.registrarTrabajador(contacto.returnArray())
+            dao.registrarTrabajador(contacto.returnArray2())
         except:
             print("Ocurrió un error...")
     elif opcion == 3:
