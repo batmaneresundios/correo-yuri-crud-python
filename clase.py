@@ -76,7 +76,7 @@ class Emergencia():
             nombre_completo = input("Ingrese nombre completo : ")
             relacion = input("Ingrese relacion: ")
             telefono = input("Ingrese telefono: ")
-            id_rut = input("Ingrese el rut del trabajador")
+            id_rut = input("Ingrese el rut del trabajador: ")
             NumeroCorrecto = True
         contacto = Contacto(rut_contacto,nombre_completo,relacion,telefono,id_rut)
         return contacto
@@ -93,9 +93,9 @@ class Emergencia():
 class Musica():
     trabajador= []
     def listarTrabajador(self):
-        print("\nTrabajador: \n")
+        print("\nTrabajadores: \n")
         for con in self.trabajador:
-            datos = "Rut {0}| Nombre Completo: {1}| Sexo {2} | Cargo {3}"
+            datos = "Rut: {0}| Nombre Completo: {1}| Sexo: {2} | Cargo: {3}"
             print(datos.format(con.rut, con.nombre_completo, con.sexo, con.cargo))
             print(" ")  
 
@@ -119,24 +119,24 @@ class Musica():
     @staticmethod
     def pedirDatosCD(rut):
         print("=== Datos personales del trabajador ===")
-        rut= input("Ingrese el rut: ")
+        rut= input("Ingrese rut del trabajador: ")
         NumeroCorrecto = False
         while(not NumeroCorrecto):
             nombre_completo = input("Ingrese nombre completo : ")
             sexo = input("Ingrese sexo: ")
-            direccion = input("Ingrese direccion: ")
+            direccion = input("Ingrese dirección: ")
             telefono = input("Ingrese telefono: ")
             NumeroCorrecto = True
             print("=== Datos laborales del trabajador ===")
             cargo = input("Ingrese cargo del trabajador: ")
             fecha_ingreso = input("Ingrese fecha de ingreso del trabajador: ")
-            print("Ingrese ID área del trabajador según lo siguiente: ")
+            print("Ingrese ID área del trabajador según las siguientes áreas: ")
             area = dao.listarArea()
             for i in range(len(area)):
                 print(area[i])
                 continue
             area = input("Ingrese ID del área: ")
-            print("Ingrese ID departamento del trabajador según lo siguiente: ")
+            print("Ingrese ID departamento del trabajador según los siguientes departamentos: ")
             departamento = dao.listarDepartamento()
             for i in range(len(departamento)):
                 print(departamento[i])
@@ -202,6 +202,49 @@ class Musica():
             del self.trabajador[existerut] #elimina el contacto de la lista en el obj
         
         return idEliminar
+    
+class Filtrado():
+    def listar_por_sexo(self):
+        sexo = input("Ingrese el sexo para filtrar (Masculino/Femenino): ")
+        trabajadores = dao.listarsexo(sexo)
+        if len(trabajadores) > 0:
+            for trabajador in trabajadores:
+                print("Rut: {0} | Nombre: {1} | Sexo: {2} | Cargo: {3}".format(
+                    trabajador[0], trabajador[1], trabajador[2], trabajador[3]))
+        else:
+            print("No se encontraron trabajadores con el sexo especificado.")
+
+    def listar_por_cargo(self):
+        cargo = input("Ingrese el cargo para filtrar: ")
+        trabajadores = dao.listarCargo(cargo)
+        if len(trabajadores) > 0:
+            for trabajador in trabajadores:
+                print("Rut: {0} | Nombre: {1} | Sexo: {2} | Cargo: {3}".format(
+                    trabajador[0], trabajador[1], trabajador[2], trabajador[3]))
+        else:
+            print("No se encontraron trabajadores con el cargo especificado.")
+
+    def listar_por_area(self):  
+        
+        area = input("Ingrese el area para filtrar: ")
+        trabajadores = dao.listararea(area)
+        if len(trabajadores) > 0:
+            for trabajador in trabajadores:
+                print("Rut: {0} | Nombre: {1} | Sexo: {2} | Cargo: {3} | Nombre Area: {4}".format(
+                    trabajador[0], trabajador[1], trabajador[2], trabajador[3],trabajador[4]))
+        else:
+            print("No se encontraron trabajadores con el cargo especificado.")
+
+    def listar_por_departamento(self):
+        departamento = input("Ingrese el departamento para filtrar según lo siguiente: ")
+        trabajadores = dao.listarDepartamento(departamento)
+        if len(trabajadores) > 0:
+            for trabajador in trabajadores:
+                print("Rut: {0} | Nombre: {1} | Sexo: {2} | Cargo: {3} | Nombre departamento: {4}".format(
+                    trabajador[0], trabajador[1], trabajador[2], trabajador[3],trabajador[4]))
+        else:
+            print("No se encontraron trabajadores con el cargo especificado.")
+
 
 
 dao = DAO()

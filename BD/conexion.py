@@ -60,9 +60,6 @@ class DAO():
                     except Error as ex:
                         print("Error al intentar la conexión: {0}".format(ex))
 
-                
-
-    
     def actualizarCds(self, datosCD):
         if self.conexion.is_connected():
             try:
@@ -114,3 +111,57 @@ class DAO():
                     return resultados
                 except Error as ex:
                     print("Error al intentar la conexión: {0}".format(ex))
+
+    def filtrarTrabajador(self, sexo):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                query = "SELECT t.rut, t.nombre_completo, t.sexo, t.cargo, t.direccion, t.telefono, t.fecha_ingreso, a.nombre AS area, d.nombre AS departamento, t.id_usuario FROM trabajador t JOIN area a ON t.id_area = a.id_area JOIN departamento d ON t.id_departamento = d.id_departamento WHERE t.sexo = %s;"
+                cursor.execute(query, (sexo,))
+                resultados = cursor.fetchall()
+                return resultados
+            except Error as ex:
+                print("Error al intentar la conexión: {0}".format(ex))
+
+    def listarsexo(self, sexo):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                sql = 'SELECT * FROM trabajador WHERE sexo = %s'
+                cursor.execute(sql, (sexo,))
+                resultados = cursor.fetchall()
+                return resultados
+            except Error as ex:
+                print("Error al intentar la conexión: {0}".format(ex))
+    def listarCargo(self,cargo):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                sql = 'SELECT * FROM trabajador WHERE cargo = %s'
+                cursor.execute(sql, (cargo,))
+                resultados = cursor.fetchall()
+                return resultados
+            except Error as ex:
+                print("Error al intentar la conexión: {0}".format(ex))
+    def listararea(self,area):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                sql = 'SELECT trabajador.rut, trabajador.nombre_completo, trabajador.sexo, trabajador.cargo, area.nombre FROM trabajador INNER JOIN area ON trabajador.id_area = area.id_area WHERE nombre= %s'
+                cursor.execute(sql, (area,))
+                resultados = cursor.fetchall()
+                return resultados
+            except Error as ex:
+                print("Error al intentar la conexión: {0}".format(ex))
+    def listarDepartamento(self,departamento):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                sql = 'SELECT trabajador.rut, trabajador.nombre_completo, trabajador.sexo, trabajador.cargo, departamento.nombre FROM trabajador INNER JOIN departamento ON trabajador.id_departamento = departamento.id_departamento WHERE nombre= %s'
+                cursor.execute(sql, (departamento,))
+                resultados = cursor.fetchall()
+                return resultados
+            except Error as ex:
+                print("Error al intentar la conexión: {0}".format(ex))                
+        
+        
