@@ -79,6 +79,9 @@ def ejecutarOpcion(opcion):
     else:
         print("Opción no válida...")
 
+
+
+
 musica = Musica()
 dao = DAO()
 actualizarTrabajador() #ponemos los datos de la BD en el objeto agenda

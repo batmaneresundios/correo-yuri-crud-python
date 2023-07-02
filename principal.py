@@ -7,6 +7,19 @@ def actualizarTrabajador():
     for con in arrayCd:
         musica.addCd(Empresa(con[0], con[1], con[2], con[3]))
 
+def imprimirCargaFamiliar():
+    print("=== Carga familiar ===")
+    if len(Familiar.carga) > 0:
+        for carga in Familiar.carga:
+            print(carga.returnCarga())
+    else:
+        print("No hay cargas familiares registradas.")
+def verificarCargaFamiliar():
+    if len(familiar.carga) > 0:
+        print("Hay cargas familiares registradas.")
+    else:
+        print("No hay cargas familiares registradas.")
+
 def menuPrincipal():
     continuar = True
     while(continuar):
@@ -18,14 +31,16 @@ def menuPrincipal():
             print("3.- Listar según sexo")
             print("4.- Listar según cargo")
             print("5.- Listar área")
-            print("6.- Listar departamento")                       
-            print("7.- Salir")
+            print("6.- Listar departamento")
+            print("7.- actualizar carga")                       
+                                   
+            print("8.- Salir")
             print("========================================================")
             opcion = int(input("Seleccione una opción: "))
 
-            if opcion < 1 or opcion > 7:
+            if opcion < 1 or opcion > 9:
                 print("Opción incorrecta, ingrese nuevamente...")
-            elif opcion == 7:
+            elif opcion == 9:
                 continuar = False
                 print("¡¡¡Gracias por usar la aplicación Correo de Yuri!!!")
                 break
@@ -75,8 +90,20 @@ def ejecutarOpcion(opcion):
             filtro.listar_por_departamento()
         except:
             print("Ocurrió un error...")
+    elif opcion == 7:
+            rut_carga = input("Ingrese el rut de carga familiar a actualizar: ")
+            if familiar.actualizarCarga(rut_carga):
+                print("Carga familiar actualizada exitosamente.")
+            else:
+                print("No se encontró la carga familiar con el rut especificado.")
+    elif opcion == 8:
+        imprimirCargaFamiliar()
+        verificarCargaFamiliar()
+
     else:
         print("Opción no válida...")
+
+
 
 
 
@@ -90,6 +117,5 @@ dao = DAO()
 actualizarTrabajador() #ponemos los datos de la BD en el objeto agenda
 
 menuPrincipal()
-
 
 

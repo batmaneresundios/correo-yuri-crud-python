@@ -42,7 +42,7 @@ class DAO():
         if self.conexion.is_connected():
             try:
                 cursor = self.conexion.cursor()
-                sql = "INSERT INTO `carga_familiar`(`rut_carga`, `nombre_completo`, `parentesco`, `rut`) VALUES ('{0}','{1}','{2}','{3}')"
+                sql = "INSERT INTO `carga_familiar`(`rut_carga`, `nombre_completo`, `parentesco`, `rut_trabajador`) VALUES ('{0}','{1}','{2}','{3}')"
                 cursor.execute(sql.format(carga[0], carga[1], carga[2], carga[3]))
                 self.conexion.commit()
                 print("Carga registrada!\n")
@@ -153,7 +153,7 @@ class DAO():
                 return resultados
             except Error as ex:
                 print("Error al intentar la conexión: {0}".format(ex))
-    def listarDepartamento(self,departamento):
+    def listardepartamento(self,departamento):
         if self.conexion.is_connected():
             try:
                 cursor = self.conexion.cursor()
@@ -165,3 +165,26 @@ class DAO():
                 print("Error al intentar la conexión: {0}".format(ex))                
         
         
+        
+    def actualizarCarga(self, carga):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                sql = "UPDATE `carga_familiar` SET `nombre_completo` = '{0}', `parentesco` = '{1}', `rut` = '{2}' WHERE `rut_carga` = '{3}'"
+                cursor.execute(sql.format(carga.nombre_completo, carga.parentesco, carga.rut, carga.rut_carga))
+                self.conexion.commit()
+                print("Carga actualizada!\n")
+            except Error as ex:
+                print("Error al intentar la conexión: {0}".format(ex))
+
+    def listarCarga(self, rut_trabajador):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                sql = "SELECT cf.rut_carga, cf.nombre_completo, cf.parentesco, cf.rut_trabajador FROM carga_familiar cf JOIN trabajador t ON cf.rut_trabajador = t.rut WHERE t.rut = %s;"
+                cursor.execute(sql, (rut_trabajador,))
+                results = cursor.fetchall()
+                return results
+            except Error as ex:
+                    print("Error al intentar la conexión: {0}".format(ex))
+

@@ -34,25 +34,42 @@ class Carga():
 
 class Familiar():
     carga = []
-    def pedirDatosCarga(rut_carga):
+    def pedirDatosCarga():
         print("=== Datos carga familiar del trabajador ===")
         rut_carga= input("Ingrese el rut carga familiar: ")
-        NumeroCorrecto = False
-        while(not NumeroCorrecto):
+        numeroCorrecto = False
+        while(not numeroCorrecto):
             nombre_completo = input("Ingrese nombre completo : ")
             parentesco = input("Ingrese parentesco: ")
             rut = input("Ingrese rut del trabajador: ")            
-            NumeroCorrecto = True
-        carga = Carga(rut_carga,nombre_completo,parentesco,rut)
+            numeroCorrecto = True
+        return Carga(rut_carga,nombre_completo,parentesco,rut)
+        
+        
+    @staticmethod
+    def agregarCarga():
+        carga = Familiar.pedirDatosCarga()
+        Familiar.carga.append(carga)
         return carga
-    
-    def agregarCarga(self):  #Agrega Cds
-        rut_carga=0
-        for con in self.carga: #revisa arreglo creado más arriba
-            if con.rut_carga > rut_carga:
-                rut_carga = con.rut_carga
-        carga = Familiar.pedirDatosCarga(rut_carga+1) #esto asegura que el id es mayor al último registrado  #
-        return carga
+
+    def actualizarCarga(rut_carga):
+        for carga in Familiar.carga:
+            if carga.rut_carga == rut_carga:
+                print("=== Actualizar carga familiar ===")
+                nombre_completo = input("Ingrese nuevo nombre completo: ")
+                parentesco = input("Ingrese nuevo parentesco: ")
+                rut = input("Ingrese nuevo rut del trabajador: ")
+                
+                carga.nombre_completo = nombre_completo
+                carga.parentesco = parentesco
+                carga.rut = rut
+
+                print("Carga familiar actualizada.")
+                return True
+
+        print("No se encontró la carga familiar con el rut especificado.")
+        
+        return False    
     
 class Contacto():
     def __init__(self,rut_contacto,nombre_completo,relacion,telefono,id_rut):
@@ -237,7 +254,7 @@ class Filtrado():
 
     def listar_por_departamento(self):
         departamento = input("Ingrese el departamento para filtrar según lo siguiente: ")
-        trabajadores = dao.listarDepartamento(departamento)
+        trabajadores = dao.listardepartamento(departamento)
         if len(trabajadores) > 0:
             for trabajador in trabajadores:
                 print("Rut: {0} | Nombre: {1} | Sexo: {2} | Cargo: {3} | Nombre departamento: {4}".format(
