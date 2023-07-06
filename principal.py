@@ -114,8 +114,8 @@ def ejecutarOpcion(opcion):
             except:
                 print("Ocurrió un error :(")
     elif opcion == 8:
-        #carga = familiar.pedirDatosCarga()
-        #dao.registrarCarga(carga.returnCarga())
+        carga = familiar.pedirDatosCarga()
+        dao.registrarCarga(carga.returnCarga())
         try:
             if len(familiar.carga_familiar) > 0:
                 familiar.listarCarga()

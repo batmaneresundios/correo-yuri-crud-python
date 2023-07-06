@@ -39,7 +39,7 @@ class Familiar():
     def listarCarga(self):
         print("\Carga: \n")
         for con in self.carga_familiar:
-            datos = "Rut: {0}| Nombre Completo: {1}| Sexo: {2} | Cargo: {3}"
+            datos = "Rut carga: {0}| Nombre Completo: {1}| Sexo: {2} | Rut trabajador: {3}"
             print(datos.format(con.rut_carga, con.nombre_completo, con.parentesco, con.rut))
             print(" ")      
 
@@ -54,8 +54,8 @@ class Familiar():
             rut = input("Ingrese rut del trabajador: ")            
             numeroCorrecto = True
         carga = Carga(rut_carga,nombre_completo,parentesco,rut) 
-        Familiar.carga_familiar.append(carga)      
-       # return carga1
+        Familiar.carga_familiar.append(carga)   
+        return carga   
     
 
 
