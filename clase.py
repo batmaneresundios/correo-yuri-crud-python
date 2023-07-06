@@ -33,7 +33,17 @@ class Carga():
         return [self.rut_carga,self.nombre_completo,self.parentesco,self.rut]
 
 class Familiar():
-    carga = []
+    carga_familiar = []
+    #carga = []
+
+    def listarCarga(self):
+        print("\Carga: \n")
+        for con in self.carga_familiar:
+            datos = "Rut: {0}| Nombre Completo: {1}| Sexo: {2} | Cargo: {3}"
+            print(datos.format(con.rut_carga, con.nombre_completo, con.parentesco, con.rut))
+            print(" ")      
+
+    @staticmethod
     def pedirDatosCarga():
         print("=== Datos carga familiar del trabajador ===")
         rut_carga= input("Ingrese el rut carga familiar: ")
@@ -43,17 +53,25 @@ class Familiar():
             parentesco = input("Ingrese parentesco: ")
             rut = input("Ingrese rut del trabajador: ")            
             numeroCorrecto = True
-        return Carga(rut_carga,nombre_completo,parentesco,rut)
-        
-        
-    @staticmethod
-    def agregarCarga():
-        carga = Familiar.pedirDatosCarga()
-        Familiar.carga.append(carga)
-        return carga
+        carga = Carga(rut_carga,nombre_completo,parentesco,rut) 
+        Familiar.carga_familiar.append(carga)      
+       # return carga1
+    
 
-    def actualizarCarga(rut_carga):
-        for carga in Familiar.carga:
+
+    @staticmethod
+    def agregarCarga(carga):
+        carga = Familiar.pedirDatosCarga()
+        Familiar.carga_familiar.append(carga)
+        
+
+    @staticmethod
+    def actualizarCarga(self):
+        self.listarCarga()
+
+            
+
+        for carga in Familiar.carga_familiar:
             if carga.rut_carga == rut_carga:
                 print("=== Actualizar carga familiar ===")
                 nombre_completo = input("Ingrese nuevo nombre completo: ")
@@ -70,6 +88,10 @@ class Familiar():
         print("No se encontró la carga familiar con el rut especificado.")
         
         return False    
+        
+    def addCarga(self,carga_familiar):
+        self.carga_familiar.append(carga_familiar)
+    
     
 class Contacto():
     def __init__(self,rut_contacto,nombre_completo,relacion,telefono,id_rut):
@@ -105,6 +127,7 @@ class Emergencia():
                 rut_contacto = con.rut_contacto
         contacto = Emergencia.pedirDatosContacto(rut_contacto+1) 
         return contacto
+    
 
 
 class Musica():
@@ -172,8 +195,7 @@ class Musica():
         return trabajador
     
     def actualizarCds(self):
-        self.listarTrabajador()
-        
+        self.listarTrabajador()        
         NumeroCorrecto = False
         while(not NumeroCorrecto):
             idEditar = input("Ingrese el ID del contacto a editar: ")
@@ -265,3 +287,4 @@ class Filtrado():
 
 
 dao = DAO()
+

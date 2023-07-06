@@ -163,8 +163,7 @@ class DAO():
                 return resultados
             except Error as ex:
                 print("Error al intentar la conexión: {0}".format(ex))                
-        
-        
+               
         
     def actualizarCarga(self, carga):
         if self.conexion.is_connected():
@@ -177,14 +176,16 @@ class DAO():
             except Error as ex:
                 print("Error al intentar la conexión: {0}".format(ex))
 
-    def listarCarga(self, rut_trabajador):
+    def listarCarga(self):
         if self.conexion.is_connected():
             try:
                 cursor = self.conexion.cursor()
-                sql = "SELECT cf.rut_carga, cf.nombre_completo, cf.parentesco, cf.rut_trabajador FROM carga_familiar cf JOIN trabajador t ON cf.rut_trabajador = t.rut WHERE t.rut = %s;"
-                cursor.execute(sql, (rut_trabajador,))
+                sql = "SELECT * FROM carga_familiar;"
+                cursor.execute(sql)
                 results = cursor.fetchall()
                 return results
             except Error as ex:
                     print("Error al intentar la conexión: {0}".format(ex))
+
+
 

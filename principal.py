@@ -1,6 +1,15 @@
 from BD.conexion import DAO
-from clase import Empresa, Musica,Familiar,Emergencia, Filtrado
+from clase import Empresa, Musica,Familiar,Emergencia, Filtrado, Carga
 
+
+def actualizarcarga():
+    arrayCd = dao.listarCarga()
+    for con in arrayCd:
+        familiar.addCarga(Carga(con[0], con[1], con[2], con[3]))
+
+        
+
+    
 
 def actualizarTrabajador():
     arrayCd = dao.listarTrabajador()
@@ -9,13 +18,13 @@ def actualizarTrabajador():
 
 def imprimirCargaFamiliar():
     print("=== Carga familiar ===")
-    if len(Familiar.carga) > 0:
-        for carga in Familiar.carga:
+    if len(Familiar.carga_familiar) > 0:
+        for carga in Familiar.carga_familiar:
             print(carga.returnCarga())
     else:
         print("No hay cargas familiares registradas.")
 def verificarCargaFamiliar():
-    if len(familiar.carga) > 0:
+    if len(Familiar.carga_familiar) > 0:
         print("Hay cargas familiares registradas.")
     else:
         print("No hay cargas familiares registradas.")
@@ -60,14 +69,15 @@ def ejecutarOpcion(opcion):
         except:
             print("Ocurrió un error...")
     elif opcion == 2:
-        contacto = musica.agregarTrabajador()
-        contacto_a = emergencia.agregarContacto()        
-        carga = familiar.agregarCarga()
-        try:
-            dao.registrarTrabajador(contacto.returnArray2())
-            dao.registrarContacto(contacto_a.arrayContacto())
-            dao.registrarCarga(carga.returnCarga())
-        except:
+        #contacto = musica.agregarTrabajador()
+        #contacto_a = emergencia.agregarContacto()        
+        #carga = Familiar.pedirDatosCarga()
+        #carga1= Familiar.agregarCarga(carga)
+        #try:
+            #dao.registrarTrabajador(contacto.returnArray2())
+            #dao.registrarContacto(contacto_a.arrayContacto())
+            #dao.registrarCarga(carga1.returnCarga())
+        #except:
             print("Ocurrió un error...")
     elif opcion == 3:
         try:
@@ -75,10 +85,10 @@ def ejecutarOpcion(opcion):
         except:
             print("Ocurrió un error...")
 
-    elif opcion == 4:
-        try:
+    #elif opcion == 4:
+        #try:
             filtro.listar_por_cargo()
-        except:
+        #except:
             print("Ocurrió un error...")
     elif opcion == 5:
         try:
@@ -90,15 +100,30 @@ def ejecutarOpcion(opcion):
             filtro.listar_por_departamento()
         except:
             print("Ocurrió un error...")
-    elif opcion == 7:
-            rut_carga = input("Ingrese el rut de carga familiar a actualizar: ")
-            if familiar.actualizarCarga(rut_carga):
-                print("Carga familiar actualizada exitosamente.")
-            else:
-                print("No se encontró la carga familiar con el rut especificado.")
+    elif opcion == 4:
+            try:
+                #actualizarCDs()
+                if len(familiar.carga_familiar) > 0:
+                    cd = familiar.actualizarCarga()
+                    if cd:
+                        dao.actualizarCarga(cd.returnCarga())
+                    else:
+                        print("Id del CDS no se encontro :(")
+                else:
+                    print("No se encontro CDs :(")
+            except:
+                print("Ocurrió un error :(")
     elif opcion == 8:
-        imprimirCargaFamiliar()
-        verificarCargaFamiliar()
+        #carga = familiar.pedirDatosCarga()
+        #dao.registrarCarga(carga.returnCarga())
+        try:
+            if len(familiar.carga_familiar) > 0:
+                familiar.listarCarga()
+        except:
+                print("hola")
+
+
+
 
     else:
         print("Opción no válida...")
@@ -115,6 +140,7 @@ musica = Musica()
 filtro = Filtrado()
 dao = DAO()
 actualizarTrabajador() #ponemos los datos de la BD en el objeto agenda
+actualizarcarga()
 
 menuPrincipal()
 
