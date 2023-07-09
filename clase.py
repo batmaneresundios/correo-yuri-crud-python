@@ -58,39 +58,40 @@ class Familiar():
         return carga   
     
 
-
     @staticmethod
     def agregarCarga(carga):
         carga = Familiar.pedirDatosCarga()
         Familiar.carga_familiar.append(carga)
         
-
-    @staticmethod
     def actualizarCarga(self):
-        self.listarCarga()
+        rut = input("Ingrese su rut: ")        
+        datos = dao.listarCargas(rut)
+        if len(datos) > 0:
+            for trabajador in datos:
+                print("Rut carga: {0}| Nombre Completo: {1}| Parentesco: {2}".format(
+                    trabajador[0], trabajador[1], trabajador[2]))
+        carga_actualizar = input("Ingrese RUT Carga familiar a actualizar: ")
 
-            
-
-        for carga in Familiar.carga_familiar:
-            if carga.rut_carga == rut_carga:
-                print("=== Actualizar carga familiar ===")
-                nombre_completo = input("Ingrese nuevo nombre completo: ")
-                parentesco = input("Ingrese nuevo parentesco: ")
-                rut = input("Ingrese nuevo rut del trabajador: ")
-                
-                carga.nombre_completo = nombre_completo
-                carga.parentesco = parentesco
-                carga.rut = rut
-
-                print("Carga familiar actualizada.")
-                return True
-
-        print("No se encontró la carga familiar con el rut especificado.")
-        
-        return False    
+        nombre = input("Ingrese nuevo nombre: ")
+        parentesco = input("Ingrese nuevo parentesco: ")
+        dao.actualizaCargas(nombre, parentesco,carga_actualizar)
+ 
         
     def addCarga(self,carga_familiar):
         self.carga_familiar.append(carga_familiar)
+
+
+
+    def eliminarCarga(self):
+        rut = input("Ingrese su rut: ")        
+        datos = dao.listarCargas(rut)
+        if len(datos) > 0:
+            for trabajador in datos:
+                print("Rut carga: {0}| Nombre Completo: {1}| Parentesco: {2}".format(
+                    trabajador[0], trabajador[1], trabajador[2]))
+        carga_eliminar = input("Ingrese RUT Carga familiar a eliminar: ")
+        dao.eliminarCarga(carga_eliminar)        
+
     
     
 class Contacto():
@@ -128,9 +129,47 @@ class Emergencia():
         contacto = Emergencia.pedirDatosContacto(rut_contacto+1) 
         return contacto
     
+    def actualizarContactoEmergencia(self):
+        rut = input("Ingrese su rut: ")        
+        datos = dao.listarContactoEmergencia(rut)
+        if len(datos) > 0:
+            for trabajador in datos:
+                print("Rut contacto de emergencia: {0}| Nombre Completo: {1}| Relacion: {2}| Telefono: {3}".format(
+                    trabajador[0], trabajador[1], trabajador[2], trabajador[3]))
+        contacto_actualizar = input("Ingrese RUT Contacto Emergencia a actualizar: ")
+
+        nombre = input("Ingrese nuevo nombre: ")
+        relacion = input("Ingrese nueva relacion: ")
+        telefono = input("Ingrese nuevo telefono: ")
+        dao.actualizaContactoEmergencia(nombre, relacion,telefono,contacto_actualizar)
+
+    def eliminarContacto(self):
+        rut = input("Ingrese su rut: ")
+        datos = dao.listarContactoEmergencia(rut)
+        if len(datos) > 0:
+            for trabajador in datos:
+                print("Rut contacto de emergencia: {0}| Nombre Completo: {1}| Relacion: {2}| Telefono: {3}".format(
+                    trabajador[0], trabajador[1], trabajador[2], trabajador[3]))
+            
+            contacto_eliminar = input("Ingrese RUT Contacto Emergencia a eliminar: ")
+            contacto_encontrado = False
+            
+            for trabajador in datos:
+                if trabajador[0] == contacto_eliminar:
+                    contacto_encontrado = True
+                    break
+            
+            if contacto_encontrado:
+                dao.eliminarContacto(contacto_eliminar)
+                print("Contacto de emergencia eliminado con éxito.")
+            else:
+                print("El RUT de contacto de emergencia ingresado no existe en la base de datos.")
+        else:
+            print("No se encontraron contactos de emergencia para el rut proporcionado.")
+        
 
 
-class Musica():
+class Empleados():
     trabajador= []
     def listarTrabajador(self):
         print("\nTrabajadores: \n")
@@ -139,25 +178,25 @@ class Musica():
             print(datos.format(con.rut, con.nombre_completo, con.sexo, con.cargo))
             print(" ")  
 
-    def rutExiste(self,rut):
-        existerut = False
-        c=0
-        for con in self.trabajador:
-            if con.rut == rut:
-                existerut = True
-                break
-            c += 1
-        if existerut:
-            indice = c
-        else:
-            indice = -1
-        return indice #retorna -1 si no está, sino, retorna indice en donde está esa id en el arreglo
 
-    def addCd(self,trabajador):
+    def actualizarDatosPersonales(self):
+        rut = input("Ingrese su rut: ")        
+        datos = dao.listarDatosPersonales(rut)
+        if len(datos) > 0:
+            for trabajador in datos:
+                print("Rut: {0}| Nombre Completo: {1}| Sexo: {2} | Cargo: {3} | Direccion: {4} | Telefono: {5}".format(
+                    trabajador[0], trabajador[1], trabajador[2], trabajador[3],trabajador[4],trabajador[5]))
+                
+        direccion = input("Ingrese nueva direccion: ")
+        telefono = input("Ingrese nuevo telefono: ")
+        dao.actualizarDatosPersonales(rut, direccion, telefono)
+
+
+    def addTrabajador(self,trabajador):
         self.trabajador.append(trabajador)
         
     @staticmethod
-    def pedirDatosCD(rut):
+    def pedirDatosTrabajador(rut):
         print("=== Datos personales del trabajador ===")
         rut= input("Ingrese rut del trabajador: ")
         NumeroCorrecto = False
@@ -186,61 +225,14 @@ class Musica():
         trabajador = Trabajador(rut,nombre_completo,sexo,cargo,direccion,telefono,fecha_ingreso,area,departamento)
         return trabajador
 
-    def agregarTrabajador(self):  #Agrega Cds
+    def agregarTrabajador(self):  
         rut=0
-        for con in self.trabajador: #revisa arreglo creado más arriba
+        for con in self.trabajador:
             if con.rut > rut:
                 rut = con.rut
-        trabajador=Musica.pedirDatosCD(rut+1) #esto asegura que el id es mayor al último registrado  #
+        trabajador=Empleados.pedirDatosTrabajador(rut+1) 
         return trabajador
     
-    def actualizarCds(self):
-        self.listarTrabajador()        
-        NumeroCorrecto = False
-        while(not NumeroCorrecto):
-            idEditar = input("Ingrese el ID del contacto a editar: ")
-            if idEditar.isnumeric():
-                if (int(idEditar) > 0):
-                    NumeroCorrecto = True
-                    idEditar = int(idEditar)
-                else:
-                    print("El Id debe ser mayor a 0.")
-            else:
-                print("debe ingresar un número.")
-        
-        existeId=self.idExiste(idEditar)
-
-        if existeId > -1:
-            print("ingrese datos a modificar")
-            trabajador=Musica.pedirDatosCD(idEditar)
-            self.cd[existeId]=trabajador #modifica el contacto en el objeto
-        else:
-            trabajador = None
-
-        return trabajador
-    
-    def eliminarCds(self):
-        self.listarTrabajador()
-
-        NumeroCorrecto = False
-        while(not NumeroCorrecto):
-            idEliminar = input("Ingrese el id del contacto a eliminar: ")
-            if idEliminar.isnumeric():
-                if (int(idEliminar) > 0):
-                    NumeroCorrecto = True
-                    idEliminar = int(idEliminar)
-                else:
-                    print("El Id debe ser mayor a 0.")
-            else:
-                print("debe ingresar un número.")
-        existerut=self.rutExiste(idEliminar)
-
-        if existerut == -1:
-            idEliminar = 0
-        else:
-            del self.trabajador[existerut] #elimina el contacto de la lista en el obj
-        
-        return idEliminar
     
 class Filtrado():
     def listar_por_sexo(self):

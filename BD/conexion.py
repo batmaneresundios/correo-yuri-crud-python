@@ -60,16 +60,6 @@ class DAO():
                     except Error as ex:
                         print("Error al intentar la conexión: {0}".format(ex))
 
-    def actualizarCds(self, datosCD):
-        if self.conexion.is_connected():
-            try:
-                cursor = self.conexion.cursor()
-                sql = "UPDATE cds SET Titulo = '{1}', Genero = '{2}', Descripcion = '{3}', Duracion = '{4}' WHERE Id = '{0}'"
-                cursor.execute(sql.format(datosCD[0], datosCD[1], datosCD[2],datosCD[3],datosCD[4]))
-                self.conexion.commit()
-                print("¡Contacto actualizado!\n")
-            except Error as ex:
-                print("Error al intentar la conexión: {0}".format(ex))
     
     def eliminarTrabajador(self, rut):
         if self.conexion.is_connected():
@@ -189,3 +179,117 @@ class DAO():
 
 
 
+    def listarDatosPersonales(self,rut):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                sql = 'SELECT `rut`, `nombre_completo`, `sexo`, `cargo`, `direccion`, `telefono` FROM `trabajador` WHERE `rut` = %s;'
+                cursor.execute(sql,(rut,))
+                results = cursor.fetchall()
+                return results
+            except Error as ex:
+                    print("Error al intentar la conexión: {0}".format(ex))
+
+    def actualizarDatosPersonales(self, rut, nueva_direccion, nuevo_telefono):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                query = "UPDATE `trabajador` SET `direccion` = %s, `telefono` = %s WHERE `rut` = %s;"
+                cursor.execute(query, (nueva_direccion, nuevo_telefono, rut))
+                self.conexion.commit()
+                cursor.close()
+                print("Datos actualizados en la base de datos.")
+            except mysql.connector.Error as error:
+                print("Error al actualizar los datos en la base de datos: ", error)
+        else:
+         print("No se pudo establecer una conexión a la base de datos.")            
+
+    def listarCargas(self,rut):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                sql = 'SELECT `rut_carga`, `nombre_completo`, `parentesco` FROM `carga_familiar` WHERE `rut_trabajador` = %s;'
+                cursor.execute(sql,(rut,))
+                results = cursor.fetchall()
+                return results
+            except Error as ex:
+                    print("Error al intentar la conexión: {0}".format(ex))
+                    
+    def actualizaCargas(self, nombre, parentesco, carga_actualizar):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                query = "UPDATE carga_familiar SET `nombre_completo` = %s, `parentesco` = %s WHERE `rut_carga` = %s;"
+                cursor.execute(query, (nombre, parentesco, carga_actualizar))
+                self.conexion.commit()
+                cursor.close()
+                print("Datos actualizados")
+            except mysql.connector.Error as error:
+                print("Error al actualizar los datos en la base de datos: ", error)
+        else:
+         print("No se pudo establecer una conexión a la base de datos.")            
+
+    def listarContactoEmergencia(self,rut):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                sql = 'SELECT `rut_contacto`, `nombre_completo`, `relacion`, `telefono` FROM `contacto_emergencia` WHERE `rut` = %s;'
+                cursor.execute(sql,(rut,))
+                results = cursor.fetchall()
+                return results
+            except Error as ex:
+                    print("Error al intentar la conexión: {0}".format(ex))
+                    
+    def actualizaContactoEmergencia(self, nombre, relacion,telefono,contacto_actualizar):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                query = "UPDATE contacto_emergencia SET `nombre_completo` = %s, `relacion` = %s,`telefono` = %s WHERE `rut_contacto` = %s;"
+                cursor.execute(query, (nombre, relacion,telefono, contacto_actualizar))
+                self.conexion.commit()
+                cursor.close()
+                print("Datos actualizados")
+            except mysql.connector.Error as error:
+                print("Error al actualizar los datos en la base de datos: ", error)
+        else:
+         print("No se pudo establecer una conexión a la base de datos.")            
+
+
+    def eliminarCarga(self,rut_carga):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                query = 'DELETE FROM `carga_familiar` WHERE rut_carga = %s;'
+                cursor.execute(query, (rut_carga,))
+                self.conexion.commit()
+                cursor.close()
+                print("Carga eliminada con exito")
+            except mysql.connector.Error as error:
+                print("Error al actualizar los datos en la base de datos: ", error)
+        else:
+         print("No se pudo establecer una conexión a la base de datos.")           
+
+    def eliminarContacto(self,rut_contacto):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                query = 'DELETE FROM `contacto_emergencia` WHERE rut_contacto = %s;'
+                cursor.execute(query, (rut_contacto,))
+                self.conexion.commit()
+                cursor.close()
+                print("Carga eliminada con exito")
+            except mysql.connector.Error as error:
+                print("Error al actualizar los datos en la base de datos: ", error)
+        else:
+         print("No se pudo establecer una conexión a la base de datos.")      
+    
+    def Login(self, id_usuario, password):
+            if self.conexion.is_connected():
+                try:
+                    cursor = self.conexion.cursor()
+                    sql = "SELECT id_usuario, tipo_usuario FROM usuario WHERE id_usuario= %s AND password = %s"
+                    cursor.execute(sql, (id_usuario, password))
+                    resultados = cursor.fetchall()
+                    return resultados
+                except Error as ex:
+                    print("Error al intentar la conexión: {0}".format(ex))
