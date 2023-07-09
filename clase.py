@@ -34,7 +34,6 @@ class Carga():
 
 class Familiar():
     carga_familiar = []
-    #carga = []
 
     def listarCarga(self):
         print("\Carga: \n")
@@ -55,8 +54,7 @@ class Familiar():
             numeroCorrecto = True
         carga = Carga(rut_carga,nombre_completo,parentesco,rut) 
         Familiar.carga_familiar.append(carga)   
-        return carga   
-    
+        return carga       
 
     @staticmethod
     def agregarCarga(carga):
@@ -79,7 +77,6 @@ class Familiar():
         
     def addCarga(self,carga_familiar):
         self.carga_familiar.append(carga_familiar)
-
 
 
     def eliminarCarga(self):
@@ -107,7 +104,6 @@ class Contacto():
 
 class Emergencia():
     contacto =[]
-
     def pedirDatosContacto(self):
         print("=== Datos contacto de Emergencia del trabajador ===")        
         rut_contacto = input("Ingrese el rut: ")
@@ -151,23 +147,11 @@ class Emergencia():
                 print("Rut contacto de emergencia: {0}| Nombre Completo: {1}| Relacion: {2}| Telefono: {3}".format(
                     trabajador[0], trabajador[1], trabajador[2], trabajador[3]))
             
-            contacto_eliminar = input("Ingrese RUT Contacto Emergencia a eliminar: ")
-            contacto_encontrado = False
+            contacto_eliminar = input("Ingrese RUT Contacto Emergencia a eliminar: ")                    
             
-            for trabajador in datos:
-                if trabajador[0] == contacto_eliminar:
-                    contacto_encontrado = True
-                    break
-            
-            if contacto_encontrado:
-                dao.eliminarContacto(contacto_eliminar)
-                print("Contacto de emergencia eliminado con éxito.")
-            else:
-                print("El RUT de contacto de emergencia ingresado no existe en la base de datos.")
+            dao.eliminarContacto(contacto_eliminar)
         else:
             print("No se encontraron contactos de emergencia para el rut proporcionado.")
-        
-
 
 class Empleados():
     trabajador= []

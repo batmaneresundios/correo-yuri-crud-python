@@ -6,25 +6,10 @@ def actualizarcarga():
     for con in arrayCarga:
         familiar.addCarga(Carga(con[0], con[1], con[2], con[3]))
    
-
 def actualizarTrabajador():
     arrayTrabajador = dao.listarTrabajador()
     for con in arrayTrabajador:
         empleados.addTrabajador(Empresa(con[0], con[1], con[2], con[3]))
-
-def imprimirCargaFamiliar():
-    print("=== Carga familiar ===")
-    if len(Familiar.carga_familiar) > 0:
-        for carga in Familiar.carga_familiar:
-            print(carga.returnCarga())
-    else:
-        print("No hay cargas familiares registradas.")
-def verificarCargaFamiliar():
-    if len(Familiar.carga_familiar) > 0:
-        print("Hay cargas familiares registradas.")
-    else:
-        print("No hay cargas familiares registradas.")
-
 
 def login():
     continuar = True
@@ -71,7 +56,6 @@ def menuPrincipal():
             else:
                 opcionCorrecta = True
                 ejecutarOpcion(opcion)
-
 
 def ejecutarOpcion(opcion):    
     if opcion == 1:
@@ -234,9 +218,6 @@ filtro = Filtrado()
 dao = DAO()
 actualizarTrabajador() #ponemos los datos de la BD en el objeto agenda
 actualizarcarga()
-
 #menuPrincipal()
 #menuTrabajador()
-
-
 login()

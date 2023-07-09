@@ -8,10 +8,10 @@ class DAO():
         try:
             self.conexion = mysql.connector.connect(
                 host='localhost',
-                port=3306, #puerto cambiado vs windows.
+                port=3306, 
                 user='root',
                 password='',
-                db='correo_yuri' #nombre bd con Mayus
+                db='correo_yuri' 
             )
         except Error as ex:
             print("Error al intentar la conexión: {0}".format(ex))
@@ -37,7 +37,6 @@ class DAO():
             except Error as ex:
                 print("Error al intentar la conexión: {0}".format(ex))
 
-
     def registrarCarga(self, carga):
         if self.conexion.is_connected():
             try:
@@ -59,34 +58,12 @@ class DAO():
                         print("Contacto de emergencia registrado!\n")
                     except Error as ex:
                         print("Error al intentar la conexión: {0}".format(ex))
-
-    
-    def eliminarTrabajador(self, rut):
-        if self.conexion.is_connected():
-            try:
-                cursor = self.conexion.cursor()
-                sql = "DELETE FROM trabajador WHERE rut = '{0}'"
-                cursor.execute(sql.format(rut))
-                self.conexion.commit()
-                print("¡Contacto eliminado!\n")
-            except Error as error: #ejemplo de uso de rollback
-                print("Fallo al intentar eliminar dato rollback: {}".format(error))
-                # revirtiendo los cambios
-                self.conexion.rollback()
-            finally:
-                # closing database connection.
-                if self.conexion.is_connected():
-                    cursor.close()
-                    #conn.close()
-                    #print("connection is closed")
-            """except Error as ex:
-                print("Error al intentar la conexión: {0}".format(ex))"""
-    
+        
     def listarArea(self):
             if self.conexion.is_connected():
                 try:
                     cursor = self.conexion.cursor()
-                    cursor.execute('SELECT * FROM area;')  #Nombre tabla con Mayus.
+                    cursor.execute('SELECT * FROM area;') 
                     resultados = cursor.fetchall()
                     return resultados
                 except Error as ex:
@@ -96,22 +73,11 @@ class DAO():
             if self.conexion.is_connected():
                 try:
                     cursor = self.conexion.cursor()
-                    cursor.execute('SELECT * FROM departamento;')  #Nombre tabla con Mayus.
+                    cursor.execute('SELECT * FROM departamento;')  
                     resultados = cursor.fetchall()
                     return resultados
                 except Error as ex:
                     print("Error al intentar la conexión: {0}".format(ex))
-
-    def filtrarTrabajador(self, sexo):
-        if self.conexion.is_connected():
-            try:
-                cursor = self.conexion.cursor()
-                query = "SELECT t.rut, t.nombre_completo, t.sexo, t.cargo, t.direccion, t.telefono, t.fecha_ingreso, a.nombre AS area, d.nombre AS departamento, t.id_usuario FROM trabajador t JOIN area a ON t.id_area = a.id_area JOIN departamento d ON t.id_departamento = d.id_departamento WHERE t.sexo = %s;"
-                cursor.execute(query, (sexo,))
-                resultados = cursor.fetchall()
-                return resultados
-            except Error as ex:
-                print("Error al intentar la conexión: {0}".format(ex))
 
     def listarsexo(self, sexo):
         if self.conexion.is_connected():
@@ -123,6 +89,7 @@ class DAO():
                 return resultados
             except Error as ex:
                 print("Error al intentar la conexión: {0}".format(ex))
+
     def listarCargo(self,cargo):
         if self.conexion.is_connected():
             try:
@@ -133,6 +100,7 @@ class DAO():
                 return resultados
             except Error as ex:
                 print("Error al intentar la conexión: {0}".format(ex))
+
     def listararea(self,area):
         if self.conexion.is_connected():
             try:
@@ -143,6 +111,7 @@ class DAO():
                 return resultados
             except Error as ex:
                 print("Error al intentar la conexión: {0}".format(ex))
+
     def listardepartamento(self,departamento):
         if self.conexion.is_connected():
             try:
@@ -152,8 +121,7 @@ class DAO():
                 resultados = cursor.fetchall()
                 return resultados
             except Error as ex:
-                print("Error al intentar la conexión: {0}".format(ex))                
-               
+                print("Error al intentar la conexión: {0}".format(ex))                              
         
     def actualizarCarga(self, carga):
         if self.conexion.is_connected():
@@ -176,8 +144,6 @@ class DAO():
                 return results
             except Error as ex:
                     print("Error al intentar la conexión: {0}".format(ex))
-
-
 
     def listarDatosPersonales(self,rut):
         if self.conexion.is_connected():
@@ -253,7 +219,6 @@ class DAO():
                 print("Error al actualizar los datos en la base de datos: ", error)
         else:
          print("No se pudo establecer una conexión a la base de datos.")            
-
 
     def eliminarCarga(self,rut_carga):
         if self.conexion.is_connected():
